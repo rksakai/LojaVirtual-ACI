@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo de Produtos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #333; }
+    header {
+      background: linear-gradient(135deg, #0066cc, #004499);
+      color: white; padding: 24px 40px;
+    }
+    header h1 { font-size: 2rem; }
+    header p  { opacity: .85; margin-top: 4px; }
+    main { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: white; border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      padding: 24px; display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,.14); }
+    .card-id  { font-size: .75rem; color: #888; margin-bottom: 8px; }
+    .card h2  { font-size: 1.2rem; color: #0066cc; margin-bottom: 10px; }
+    .card p   { font-size: .9rem; color: #555; flex-grow: 1; line-height: 1.5; }
+    .price    { margin-top: 16px; font-size: 1.4rem; font-weight: 700; color: #004499; }
+    .empty    { text-align: center; padding: 80px 20px; color: #888; }
+    footer    { text-align: center; padding: 24px; color: #aaa; font-size: .85rem; margin-top: 60px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 Catálogo de Produtos</h1>
+    <p>{{ produtos|length }} produto(s) disponível(is)</p>
+  </header>
+  <main>
+    {% if produtos %}
+      <div class="grid">
+        {% for p in produtos %}
+        <div class="card">
+          <span class="card-id">#{{ p.id }}</span>
+          <h2>{{ p.nome }}</h2>
+          <p>{{ p.descricao }}</p>
+          <div class="price">R\$ {{ "%.2f"|format(p.valor)|replace(".", ",") }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">Nenhum produto cadastrado no momento.</div>
+    {% endif %}
+  </main>
+  <footer>Catálogo de Produtos — Azure Container Apps + SQL Server</footer>
+</body>
+</html>
